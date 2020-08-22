@@ -48,7 +48,7 @@ export class ItemService {
 
   updateItem(item: Item) {
     this.items.forEach((cur, index) => {
-      if (item.id = cur.id) {
+      if (item.id === cur.id) {
         this.items.splice(index, 1);
       }
     });
