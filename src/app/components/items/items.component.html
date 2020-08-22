@@ -1,0 +1,15 @@
+<ul class="list-group" *ngIf="loaded && items.length > 0">
+    <li *ngFor="let item of items" [class.list-group-item-secondary]="selectedItem === item"
+        class="list-group-item d-flex justify-content-between align-items-center">
+            <a (click)="onSelect(item)" href="#">{{ item.text }}</a>
+            <i (click)="onDelete(item)" class="fa fa-suitcase"></i>
+    </li>
+</ul>
+
+<div *ngIf="loaded && items.length == 0">
+    <h4>There's nothing left to pack!</h4>
+</div>
+
+<div *ngIf="!loaded">
+    Loading...
+</div>
