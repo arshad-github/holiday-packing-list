@@ -10,6 +10,7 @@ import { Item } from '../models/Item';
 })
 export class ItemService {
   items: Item[];
+  packedItems: Item[];
 
   private itemSource = new BehaviorSubject<Item>({
     id: null,
@@ -24,6 +25,7 @@ export class ItemService {
 
   constructor() { 
     this.items = [];
+    this.packedItems = [];
   }
 
   getItems(): Observable<Item[]> {
@@ -37,6 +39,17 @@ export class ItemService {
     }))
   }
 
+  getPackedItems(): Observable<Item[]> {
+    if (localStorage.getItem('packedItems') === null) {
+      this.packedItems = [];
+    } else {
+      this.packedItems = JSON.parse(localStorage.getItem('packedItems'));
+    }
+    return of(this.packedItems.sort((a, b) => {
+      return b.date - a.date;
+    }))
+  }
+
   setFormItem(item: Item) {
     this.itemSource.next(item);
   }
@@ -44,6 +57,14 @@ export class ItemService {
   addItem(item: Item) {
     this.items.unshift(item);
     localStorage.setItem('items', JSON.stringify(this.items));
+  }
+
+  addToPacked(item: Item) {
+    console.log(`add to packed ${item}`);
+    this.packedItems.unshift(item);
+    console.log(`packedItems: ${this.packedItems}`);
+    localStorage.setItem('packedItems', JSON.stringify(this.packedItems));
+    this.deleteItem(item);
   }
 
   updateItem(item: Item) {
@@ -63,6 +84,10 @@ export class ItemService {
       }
     });
     localStorage.setItem('items', JSON.stringify(this.items));
+  }
+
+  clearPackedItems() {
+    localStorage.removeItem('packedItems');
   }
 
   clearState() {

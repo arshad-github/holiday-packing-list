@@ -1,8 +1,12 @@
 <ul class="list-group" *ngIf="loaded && items.length > 0">
+    <h3>Items to be packed:</h3>
     <li *ngFor="let item of items" [class.list-group-item-secondary]="selectedItem === item"
         class="list-group-item d-flex justify-content-between align-items-center">
             <a (click)="onSelect(item)" href="#">{{ item.text }}</a>
-            <i (click)="onDelete(item)" class="fa fa-suitcase"></i>
+            <div> 
+                <i (click)="onDelete(item)" class="fa fa-trash"></i>
+                <i (click)="onPack(item)" class="ml-3 fa fa-suitcase"></i>
+            </div>
     </li>
 </ul>
 
@@ -12,4 +16,8 @@
 
 <div *ngIf="!loaded">
     Loading...
+</div>
+
+<div class="packed-items">
+    <input routerLink="/packed" value="View packed items" class="btn btn-primary mt-3"><br>
 </div>

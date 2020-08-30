@@ -39,8 +39,14 @@ export class ItemsComponent implements OnInit {
   }
 
   onDelete(item: Item) {
-    if (confirm(`Confirm that ${item.text} has been packed?`)) {
+    if (confirm(`Confirm that ${item.text} should be deleted?`)) {
       this.itemService.deleteItem(item);
+    }
+  }
+
+  onPack(item: Item) {
+    if (confirm(`Confirm that ${item.text} has been packed?`)) {
+      this.itemService.addToPacked(item);
     }
   }
 
